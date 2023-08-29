@@ -10,15 +10,29 @@ export default function Posts() {
   const [searchParam, setSearchParam] = useState("");
   const navigate = useNavigate();
 
+  async function getAllPosts() {
+    const APIResponse = await fetchAllPosts();
+    console.log(APIResponse)
+    if (APIResponse.success) {
+      setPosts(APIResponse.data.posts);
+      // setPosts(APIResponse.data)
+    } else {
+      setError(APIResponse.error.message);
+    }
+  }
 
   async function handleDelete(id) {
     try {
       const result = await deletePost(id);
       console.log(result)
-      setPosts(result.data.posts)
+      if (result.success) {
+        getAllPosts();
+        console.log('show success')
+      } else {
+        console.log('this is a fail')
+      }
+
       alert("Deleted Post!")
-      console.log(result);
-      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -26,16 +40,6 @@ export default function Posts() {
 
  
   useEffect(() => {
-    async function getAllPosts() {
-      const APIResponse = await fetchAllPosts();
-      console.log(APIResponse)
-      if (APIResponse.success) {
-        setPosts(APIResponse.data.posts);
-        // setPosts(APIResponse.data)
-      } else {
-        setError(APIResponse.error.message);
-      }
-    }
     getAllPosts();
   }, []);
 

@@ -22,7 +22,8 @@ export async function fetchAllPosts() {
 export async function deletePost(postId) {
     try {
         const response = await fetch(`${BASE_URL}/posts/${postId}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGVkMzBkMzIxZDlkYjAwMTQ2YTExMmUiLCJ1c2VybmFtZSI6ImFhYSIsImlhdCI6MTY5MzI2NjEzMX0.sox5yWgw056XvPSgWYuqtd5Z9Ntpq5J_152XD88KvUk"}
         });
           
         const result = await response.json();
